@@ -3,6 +3,8 @@
 Module for data filtering with log obfuscation
 """
 
+import os
+import mysql.connector
 import re
 from typing import List
 import logging
@@ -65,3 +67,13 @@ def get_logger() -> logging.Logger:
     logger.addHandler(stream_handler)
 
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """Connects to the MySQL database."""
+    # Connect to the MySQL database
+    return mysql.connector.connect(
+        host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
+        database=os.getenv("PERSONAL_DATA_DB_NAME"),
+        user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
+        password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""))
