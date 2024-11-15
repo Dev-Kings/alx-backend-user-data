@@ -2,6 +2,7 @@
 """
 Module with class Auth
 """
+import fnmatch
 from flask import request
 from typing import List, TypeVar
 
@@ -28,7 +29,19 @@ class Auth:
         path = path.rstrip('/') + '/'
         excluded_paths = [p.rstrip('/') + '/' for p in excluded_paths]
 
-        return path not in excluded_paths
+        # Check for paths with '*' at the end
+        for excluded_path in excluded_paths:
+            if excluded_path.endswith('*'):
+                # Use fnmatch to match paths with the wildcard
+                if fnmatch.fnmatch(path, excluded_path):
+                    return False
+            else:
+                # Check for exact match
+                if path == excluded_path:
+                    return False
+
+        # If no match, authentication is required
+        return True
 
     def authorization_header(self, request=None) -> str:
         """Retrieves the authorization header from the request.
