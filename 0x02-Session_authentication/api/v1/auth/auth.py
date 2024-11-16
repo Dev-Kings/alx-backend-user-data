@@ -5,6 +5,7 @@ Module with class Auth
 import fnmatch
 from flask import request
 from typing import List, TypeVar
+from os import getenv
 
 
 class Auth:
@@ -56,3 +57,21 @@ class Auth:
             str: None, as the implementation is incomplete.
         """
         return None
+
+    def session_cookie(self, request=None):
+        """Retrives the value of the cookie named by the SESSION_NAME
+        environment variable from the request.
+
+        Args:
+            request: The Flask request object to extract cookie from.
+
+        Returns:
+            str: The value of the session cookie, None if not present.
+        """
+        if request is None:
+            return None
+
+        # Get the session cookie from environment variable SESSION_NAME
+        session_name = getenv("SESSION_NAME", "_my_session_id")
+
+        return request.cookies.get(session_name)
