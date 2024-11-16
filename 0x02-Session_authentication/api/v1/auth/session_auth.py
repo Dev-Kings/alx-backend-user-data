@@ -44,7 +44,7 @@ class SessionAuth(Auth):
         # Retrieve the user ID using .get() for safe dictionary access
         return self.user_id_by_session_id.get(session_id)
 
-    def current_user(self, request=None):
+    def current_user(self, request=None) -> User:
         """
         Retrieves the User instance based on the cookie value.
         Args:
@@ -66,3 +66,31 @@ class SessionAuth(Auth):
 
         # Retrieve the User instance from the database
         return User.get(user_id)
+
+    def destroy_session(self, request=None) -> bool:
+        """
+        Deletes the user session / logout.
+        Args:
+            request (Request): Flask request object.
+        Returns:
+            None
+        """
+        if request is None:
+            return None
+
+        # Retrieve the session ID from the session cookie
+        session_id = self.session_cookie(request)
+
+        if session_id is None:
+            return None
+
+        # Get the user ID based on the session ID
+        user_id = self.user_id_for_session_id(session_id)
+
+        if user_id is None:
+            return None
+
+        # Delete the session ID from the dictionary
+        del self.user_id_by_session_id[session_id]
+
+        return True
