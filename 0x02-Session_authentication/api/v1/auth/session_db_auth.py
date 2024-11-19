@@ -45,7 +45,7 @@ class SessionDBAuth(SessionExpAuth):
             return None
 
         # Check session duration
-        print(f"Session duration set to: {self.session_duration} seconds")
+        # print(f"Session duration set to: {self.session_duration} seconds")
         if self.session_duration <= 0:
             return user_session.user_id
 
