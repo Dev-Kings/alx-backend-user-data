@@ -40,7 +40,7 @@ class SessionDBAuth(SessionExpAuth):
                 break
 
         if user_session is None:
-            print("No matching session found")
+            # print("No matching session found")
             return None
 
         # Check session duration
@@ -48,9 +48,10 @@ class SessionDBAuth(SessionExpAuth):
             return user_session.user_id
 
         # Verify session expiration
-        expiration_time = user_session.created_at + timedelta(seconds=self.session_duration)
+        expiration_time = user_session.created_at + timedelta(
+            seconds=self.session_duration)
         if expiration_time < datetime.now():
-            print("Session expired")
+            # print("Session expired")
             return None
 
         print(f"Session valid for user_id: {user_session.user_id}")
