@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-"""Session authentication views"""
+"""
+Session authentication views
+"""
 from flask import jsonify, request, abort
-from api.v1.app import auth
+# from api.v1.app import auth
+from flask import current_app
 from api.v1.views import app_views
 from models.user import User
 from os import getenv
@@ -41,7 +44,8 @@ def login():
         return jsonify({"error": "wrong password"}), 401
 
     # Create a session cookie
-    session_id = auth.create_session(user.id)
+    # session_id = auth.create_session(user.id)
+    session_id = current_app.auth.create_session(user.id)
 
     # Prepare the response
     user_json = user.to_json()
@@ -61,7 +65,8 @@ def logout():
     DELETE /api/v1/auth_session/logout
     Handles logout by deleting session
     """
-    if not auth.destroy_session(request):
+    # if not auth.destroy_session(request):
+    if not current_app.auth.destroy_session(request):
         abort(404)
 
     return jsonify({}), 200
