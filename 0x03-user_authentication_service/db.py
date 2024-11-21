@@ -1,4 +1,4 @@
-"""DB module
+"""DB module for the User class
 """
 from sqlalchemy import create_engine
 # from sqlalchemy.ext.declarative import declarative_base
@@ -9,7 +9,7 @@ from user import Base, User
 
 
 class DB:
-    """DB class
+    """DB class for the User class
     """
 
     def __init__(self) -> None:
