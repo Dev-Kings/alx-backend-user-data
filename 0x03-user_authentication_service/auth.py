@@ -65,14 +65,14 @@ class Auth:
             return session_id
         except NoResultFound:
             return None
-        
+
     def get_user_from_session_id(self, session_id: str) -> User:
         """
         Gets a user from a session id.
         Args:
             session_id (str): the session id
         Returns:
-            User: the user' queried
+            User: the user' queried, or None
         """
         if session_id is None:
             return None
