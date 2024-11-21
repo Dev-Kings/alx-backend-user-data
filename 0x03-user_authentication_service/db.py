@@ -5,6 +5,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 
 from user import Base, User
 
@@ -45,3 +47,25 @@ class DB:
         self._session.commit()
         self._session.refresh(user)  # Refresh to get the auto-generated ID
         return user
+
+    def find_user_by(self, **kwargs) -> User:
+        """
+        Get a user from the database
+        Args:
+            kwargs (dict): A dictionary of attributes to search for
+
+        Returns:
+            User: The first row that matches the search criteria
+        Raises:
+            - NoResultFound: If no results are found
+            - InvalidRequestError: If the query is invalid
+        """
+        if not kwargs:
+            raise InvalidRequestError("Invalid search criteria")
+        try:
+            user = self._session.query(User).filter_by(**kwargs).one()
+            return user
+        except NoResultFound:
+            raise NoResultFound("No user found for the given criteria")
+        except InvalidRequestError:
+            raise InvalidRequestError("Invalid search criteria")
