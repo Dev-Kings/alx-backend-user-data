@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-This is a simple web application that uses the Flask framework to serve a
+This is a simple web application that uses the Flask framework
+to create a RESTful API.
 """
 
 from flask import Flask, jsonify
@@ -13,5 +14,5 @@ def hello():
     return jsonify({'message': 'Bienvenue'})
 
 
-if __name__ == '__main__':
-    app.run(host="0.0.0.0" port="5000")
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port="5000")
