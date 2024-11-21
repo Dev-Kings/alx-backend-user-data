@@ -10,7 +10,10 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'])
-def hello():
+def hello() -> str:
+    """
+    This function is the starting point of the application.
+    """
     return jsonify({'message': 'Bienvenue'})
 
 
