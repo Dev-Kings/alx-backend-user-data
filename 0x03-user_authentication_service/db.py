@@ -42,4 +42,5 @@ class DB:
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
         self._session.commit()
+        self._session.refresh(user)  # Refresh to get the auto-generated ID
         return user
