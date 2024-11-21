@@ -4,8 +4,8 @@ This is a simple web application that uses the Flask framework
 to create a RESTful API.
 """
 
-from flask import Flask, jsonify, request
 from auth import Auth
+from flask import Flask, jsonify, request
 
 
 app = Flask(__name__)
@@ -33,7 +33,7 @@ def register_user() -> str:
 
     try:
         user = AUTH.register_user(email, password)
-        return jsonify({'email': user.email, 'message': 'user created'}), 201
+        return jsonify({'email': user.email, 'message': 'user created'}), 200
     except ValueError:
         return jsonify({'message': 'email already registered'}), 400
 
