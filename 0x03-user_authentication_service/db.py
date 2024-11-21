@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """DB module for the User class
 """
 from sqlalchemy import create_engine
