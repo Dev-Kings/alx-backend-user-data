@@ -74,7 +74,6 @@ class Auth:
         """
         try:
             self._db.update_user(user_id, session_id=None)
-            self._db.commit()
             return None
         except NoResultFound:
             return None
